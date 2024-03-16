@@ -10,9 +10,11 @@ import ProfilePage from 'pages/profile';
 import LoginPage from 'pages/login';
 import SignupPage from 'pages/signup';
 
-export default function Router() {
-  // firebase Auth 가 인증되었으면 true로 변경해주는 로직 추가
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+interface RouterProps{
+  isAuthenticated: boolean;
+}
+
+export default function Router({ isAuthenticated }: RouterProps) {
 
   return (
     <>
@@ -25,8 +27,6 @@ export default function Router() {
             <Route path='/posts/new' element={<PostNew />} />
             <Route path='/posts/edit/:id' element={<PostEdit />} />
             <Route path='/profile' element={<ProfilePage />} />
-            <Route path='/login' element={<LoginPage />} />
-            <Route path='/signup' element={<SignupPage />} />
             {/* 정의하지 않은 path 를 입력했을 때 디폴트 루트 페이지 */}
             <Route path='*' element={<Navigate replace to="/" />} />
           </>

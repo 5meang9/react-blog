@@ -1,5 +1,8 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { initializeApp, FirebaseApp, getApp } from "firebase/app";
+import 'firebase/auth';
+
+export let app: FirebaseApp;
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -12,6 +15,12 @@ const firebaseConfig = {
   messagingSenderId: process.env.REACT_APP_MESSAGING_SENTER_ID,
   appId: process.env.REACT_APP_ID
 };
+
+try{
+  app = getApp('app')
+} catch (e){
+  app = initializeApp(firebaseConfig, 'app')
+}
 
 // Initialize Firebase
 const firebase = initializeApp(firebaseConfig);
