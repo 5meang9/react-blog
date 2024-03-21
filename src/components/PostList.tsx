@@ -30,7 +30,7 @@ export default function PostList({ hasNavigation = true }: PostListProps){
 
   const getPosts = async () =>{
     const datas = await getDocs(collection(db, 'posts'));
-    setPosts([]);
+    setPosts([]); // 업데이트 된 post 가 합쳐지는 현상이 발생하여, 초기화 해줌
     datas?.forEach((doc) =>{
       const dataObj = {...doc.data(), id: doc.id};
       setPosts((prev)=> [...prev, dataObj as PostProps])
