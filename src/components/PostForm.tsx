@@ -4,7 +4,7 @@ import { db } from "firebaseApp";
 import AuthContext from "context/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { CategoryType, PostProps } from "./PostList";
+import { CATEGORIES, CategoryType, PostProps } from "./PostList";
 
 export default function PostForm(){
   const params = useParams();
@@ -75,7 +75,7 @@ export default function PostForm(){
       setContent(value);
     }
     if(name === 'category'){
-      setCategory(category);
+      setCategory(value as CategoryType);
     }
   }
 
@@ -97,7 +97,7 @@ export default function PostForm(){
       setTitle(post?.title);
       setContent(post?.content);
       setSummary(post?.summary);
-      setCategory(post?.category);
+      setCategory(post?.category as CategoryType);
     }
   },[post]);
 
@@ -109,7 +109,12 @@ export default function PostForm(){
       </div>
       <div className="form__block">
         <label htmlFor="category">카테고리</label>
-        <select name="category" id="category" onChange={onChange} defualtValue={category}></select>
+        <select name="category" id="category" onChange={onChange} defaultValue={category}>
+          <option value="">카테고리를 선택해주세요</option>
+          {CATEGORIES?.map((category) => (
+            <option value={category} key={category}>{category}</option>
+          ))}
+        </select>
       </div>
       <div className="form__block">
         <label htmlFor="summary">요약</label>
