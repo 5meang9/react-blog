@@ -12,7 +12,7 @@ export default function PostForm(){
   const [title, setTitle] = useState<string>('');
   const [summary, setSummary] = useState<string>('');
   const [content, setContent] = useState<string>('');
-  const [category, setCategory] = useState<CategoryType | undefined>("Frontend");
+  const [category, setCategory] = useState<CategoryType>("Frontend");
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ export default function PostForm(){
     try{
       if(post && post.id){
         // 만약 post 데이터가 있다면, firestore 로 데이터 수정
-        const postRef = doc(db, "post", post?.id);
+        const postRef = doc(db, "posts", post?.id);
         await updateDoc(postRef, {
           title: title,
           summary: summary,
@@ -32,17 +32,17 @@ export default function PostForm(){
             minute: '2-digit',
             second: '2-digit',
           }),
-          category: category,
+          category:category,
         });
         toast?.success("게시글을 수정했습니다.");
-        navigate(`/posts/${post.id}`);
+        navigate(`/posts/${post?.id}`);
       }else{
         // firestore 로 데이터 생성
         await addDoc(collection(db, "posts"), {
           title: title,
           summary: summary,
           content: content,
-          createAt: new Date()?.toLocaleDateString("ko",{
+          createdAt: new Date()?.toLocaleDateString("ko",{
             hour: '2-digit',
             minute: '2-digit',
             second: '2-digit',
@@ -109,7 +109,7 @@ export default function PostForm(){
       </div>
       <div className="form__block">
         <label htmlFor="category">카테고리</label>
-        <select name="category" id="category" onChange={onChange} defaultValue={category}>
+        <select name="category" id="category" onChange={onChange} value={category}>
           <option value="">카테고리를 선택해주세요</option>
           {CATEGORIES?.map((category) => (
             <option value={category} key={category}>{category}</option>

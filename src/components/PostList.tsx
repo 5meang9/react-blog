@@ -67,6 +67,7 @@ export default function PostList({ hasNavigation = true, defaultTab = 'all' }: P
       getPosts(); // 변경된 post 리스트를 다시 가져옴
     }
   }
+  
   useEffect(() => {
     getPosts();
   }, [activeTab]);
@@ -99,7 +100,7 @@ export default function PostList({ hasNavigation = true, defaultTab = 'all' }: P
       <div className="post__list">
         {posts?.length > 0 ? posts?.map((post, index) => (
           <div key={post?.id} className="post__box">
-            <Link to={`posts/${index}`}>
+            <Link to={`posts/${post?.id}`}>
               <div className="post__profile-box">
                 <div className="post__profile" />
                 <div className="post__author-name">{post?.email}</div>
