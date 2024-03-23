@@ -10,7 +10,14 @@ interface PostListProps{
   defaultTab?: TabType | CategoryType;
 }
 
-type TabType = "all" | "my"
+type TabType = "all" | "my";
+
+export interface CommentsInterface{
+  content: string;
+  uid: string;
+  email: string;
+  createdAt: string;
+}
 
 export interface PostProps{
   id?: string;
@@ -22,6 +29,7 @@ export interface PostProps{
   updatedAt: string;
   uid: string;
   category?: CategoryType;
+  comments?: CommentsInterface[];
 }
 
 export type CategoryType = 'Frontend' | 'Backend' | 'Web' | 'Native';
