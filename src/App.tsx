@@ -1,13 +1,15 @@
 import './App.css';
 import Router from './components/Router';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { app } from 'firebaseApp';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loader from 'components/Loader';
+import ThemeContext from 'context/ThemeContext';
 
 function App() {
+  const context = useContext(ThemeContext);
   const auth = getAuth(app);
   // firebase Auth 가 인증되었으면 true로 변경해주는 로직 추가
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
@@ -30,10 +32,10 @@ function App() {
   })
 
   return (
-    <>
+    <div className={context.theme === 'light' ? 'white' : 'dark'}>
       <ToastContainer />
       {init ? <Router isAuthenticated={isAuthenticated}/> : <Loader />}
-    </>
+    </div>
   );
 }
 
